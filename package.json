@@ -1,0 +1,21 @@
+{
+  "name": "storage-devices-sync",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --watch build/main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "@types/rsync": "^0.4.36",
+    "ts-node": "^10.9.2",
+    "tsc": "^2.0.4"
+  },
+  "dependencies": {
+    "rsync": "^0.6.1"
+  }
+}
