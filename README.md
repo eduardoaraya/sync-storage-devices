@@ -12,7 +12,7 @@ The script should be running into different operational systems like: Mac, Windo
 
 Integrations with: google driver and gmail.
 
-> The Ideal is also take important attachments from received emails.
+> The idea is also take important attachments from received emails.
 
 ## Setup
 
@@ -31,7 +31,7 @@ Another important point is that should run in a local backup.
 
 Configuration file should be like:
 
-```json
+```ts
 {
   schedule: 10000,
   defaultOutput: path.resolve(os.homedir(), "sync_directories"),
