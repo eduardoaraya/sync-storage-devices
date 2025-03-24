@@ -2,3 +2,4 @@ node_modules/
 _test/
 build/
 .sync-storage-devices.json
+logs/
