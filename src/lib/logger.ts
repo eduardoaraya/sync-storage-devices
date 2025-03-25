@@ -9,22 +9,22 @@ function createLog(type: string) {
       "logs",
       `${type}-${date.toLocaleDateString("en-us").replaceAll("/", "-")}.txt`
     ),
-    "utf-8"
+    {
+      encoding: "utf-8",
+      autoClose: true,
+      flags: "a",
+    }
   );
-  stream.on("close", () => console.log("closed"));
-  stream.on("finish", () => console.log("finished"));
-  stream.on("ready", () => console.log("ready"));
-  stream.on("pipe", (data) => console.log("data", data));
   return {
-    write: (content: string) => stream.write(content),
-    stream,
+    log: (content: string) => stream.write(content),
+    close: () => stream.close(),
   };
 }
 
-export async function logError(content: string) {
-  return createLog("error").write(content);
+export function logError() {
+  return createLog("error");
 }
 
-export async function log(content: string) {
-  return createLog("log").write(content);
+export function log() {
+  return createLog("log");
 }

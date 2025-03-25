@@ -1,6 +1,6 @@
 import { IConfigFile, IDirConfig, loadConfig, loadDirs } from "./config";
 import Rsync from "rsync";
-import { log, logError } from "./logger";
+import { log } from "./logger";
 
 export async function execRsync(bkp: boolean = true) {
   const config = await loadConfig();
@@ -38,7 +38,9 @@ export function rsyncBuild(
     r.set("backup");
     r.set(
       "backup-dir",
-      `${config.defaultOutput}/backups/${label}-${new Date().getTime()}`
+      `${config.defaultOutput}/backups/${label}-${new Date()
+        .toLocaleDateString("en-us")
+        .replaceAll("/", "-")}`
     );
   }
   return r;
@@ -46,15 +48,16 @@ export function rsyncBuild(
 
 async function exec(r: any) {
   if (!(r instanceof Rsync)) return;
-
+  const logger = log();
   return new Promise((resolve, reject) => {
     r.execute(
-      (err, code, _cmd) => {
-        if (err) reject(err);
+      (err, code, cmd) => {
+        logger.log(`cmd finished: ${cmd}`);
+        logger.close();
+        if (err) return reject(err);
         resolve(code);
-      },
-      (data) => console.log(data.toString()),
-      (data) => console.error(data.toString())
+      }
+      // (data) => logger.log(data.toString())
     );
   });
 }

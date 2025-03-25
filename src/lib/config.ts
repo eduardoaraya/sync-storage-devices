@@ -6,6 +6,7 @@ export interface IDirConfig {
   source: string[];
   output?: string;
   ignore?: string[];
+  exclude?: string[];
 }
 
 export interface IDirecoties {
@@ -58,6 +59,13 @@ export async function loadConfig(): Promise<IConfigFile> {
     process.exit(1);
   }
   return (cached = JSON.parse(content) as IConfigFile);
+}
+
+function createConfigObj(config: IConfigFile) {
+  return {
+    ...config,
+    dirs: () => loadDirs(config),
+  };
 }
 
 export function loadDirs(config: IConfigFile): [string, IDirConfig][] {
